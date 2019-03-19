@@ -56,7 +56,9 @@ Edit View
 <% end %>
 ```
 
-Run migrations with `rails db:migrate`
+Run migrations locally with `rails db:migrate`
+
+Test locally in browser with `rails s`
 
 
 
@@ -65,5 +67,10 @@ Commit and push to Heroku
 $ git commit -a -m "first commit"
 $ git push heroku master
 ```
+
+Run migrations on Heroku with `heroku run rails db:migrate`
+
+Update CORS settings of Bucketeer S3 Bucket to allow uploads:
+https://devcenter.heroku.com/articles/bucketeer#updating-cors-settings
 
 View app `heroku open`
