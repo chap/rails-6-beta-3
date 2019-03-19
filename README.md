@@ -2,7 +2,7 @@ Create Rails and Heroku apps
 ```
 $ gem install rails --version=6.0.0.beta3
 $ rails new rails-6-beta-3 -d postgresql
-$ heroku create rails-6-beta-3
+$ heroku create my-heroku-app-name
 ```
 
 Follow [Heroku's Active Storage](https://devcenter.heroku.com/articles/active-storage-on-heroku) instructions.
