@@ -1,24 +1,69 @@
-# README
+Create Rails and Heroku apps
+```
+$ gem install rails --version=6.0.0.beta3
+$ rails new rails-6-beta-3 -d postgresql
+$ heroku create rails-6-beta-3
+```
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Follow [Heroku's Active Storage](https://devcenter.heroku.com/articles/active-storage-on-heroku) instructions.
 
-Things you may want to cover:
+Add `amazon` definition to `config/storage.yml`
 
-* Ruby version
+Add Bucketeer add-on:
+```
+heroku addons:add bucketeer
+```
 
-* System dependencies
+Set `config.active_storage.service = :amazon` in `config/environments/production.rb`
 
-* Configuration
+Add `gem "aws-sdk-s3", require: false` to `Gemfile`
+Uncomment `gem 'image_processing', '~> 1.2'` line in `Gemfile`
+```
+$ bundle install
+```
 
-* Database creation
+Add buildpack:
+```
+heroku buildpacks:add -i 1 https://github.com/heroku/heroku-buildpack-activestorage-preview
+```
 
-* Database initialization
+Add action text fields in migration:
+```
+rails action_text:install
+```
 
-* How to run the test suite
+Create ActiveRecord scaffold:
+```
+rails g scaffold message title:string content:text
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Edit model:
+```
+# app/models/message.rb
+class Message < ApplicationRecord
+  has_rich_text :content
+end
+```
 
-* Deployment instructions
+Edit View
+```
+<%# app/views/messages/_form.html.erb %>
+<%= form_with(model: message) do |form| %>
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.rich_text_area :content %>
+  </div>
+<% end %>
+```
 
-* ...
+Run migrations with `rails db:migrate`
+
+
+
+Commit and push to Heroku
+```
+$ git commit -a -m "first commit"
+$ git push heroku master
+```
+
+View app `heroku open`
