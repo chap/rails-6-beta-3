@@ -1,1 +1,1 @@
-bundle exec rails db:schema:cache:dump && bundle exec puma -P $PORT
+web: bundle exec rails db:schema:cache:dump && bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
