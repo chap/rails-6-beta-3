@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
+    sleep(params[:sleep].to_i) if params[:sleep].present?
     @messages = Message.all
   end
 
